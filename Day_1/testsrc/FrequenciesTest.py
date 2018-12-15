@@ -7,10 +7,9 @@ class MyTestCase(unittest.TestCase):
     def setUp(self):
         self.freq = Freq()
 
-
     def test_openFile(self):
         try:
-            self.freq.openFile("input.txt")
+            self.freq.fileio.openFile("input.txt")
         except:
             self.fail()
 

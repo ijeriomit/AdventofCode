@@ -1,43 +1,45 @@
+import os
+
+from FileIO import fileIO
+
 
 class RepeatLetter:
 
     def __init__(self):
-        self.file = None
-
-    def openFile(self, filename):
-        self.file = open("C:/Users/jerio/Documents/PycharmProjects/AdventofCode/Day_2/" + filename, "r")
+        self.fileio = fileIO(os.getcwd())
 
     def findSimialarStrings(self, filename):
-        self.openFile(filename)
-        lines = self.file.readlines()
+        self.fileio.openFile(filename)
+        lines = self.fileio.file.readlines()
         for i in range(len(lines)):
             for j in range(i+1, len(lines)):
-                index = self.areStringsSimialar(lines[i], lines[j])
-                if index != -1:
-                    return lines[i],lines[j], index
+                if self.areStringsSimialar(lines[i], lines[j]):
+                    self.fileio.file.close()
+                    return lines[i], lines[j]
+        self.fileio.file.close()
 
-    def removeDifferentLetters(self, string, index):
-        return string[:index] + string[(index+1):]
+    def removeDifferentLettersFromSimilarStrings(self, string1, string2):
+        for i in range(len(string1)):
+            if string1[i] != string2[i]:
+                return string1[:i] + string1[(i+1):]
 
     def areStringsSimialar(self, string1, string2):
         diffcount =0
-        index = -1
         for i in range(len(string1)):
             if string1[i] != string2[i]:
                 diffcount += 1
-                index = i
                 if diffcount > 1:
-                    return -1
-        return index
+                    return False
+        return True
 
     def countRepeats(self, filename):
-        repeat2, repeat3 =0, 0
-        self.openFile(filename)
-        for line in self.file:
+        repeat2, repeat3 = 0, 0
+        self.fileio.openFile(filename)
+        for line in self.fileio.file:
             temp1, temp2 = self.getOccurences(line)
             repeat2 += temp1
             repeat3 += temp2
-        self.file.close()
+        self.fileio.file.close()
         return repeat2 * repeat3
 
     def getOccurences(self, string):
@@ -61,5 +63,12 @@ class RepeatLetter:
                     return count
         return count
 
+def main():
 
+    repeatletters = RepeatLetter()
+    print("CheckSum:", repeatletters.countRepeats("input.txt"))
+    string1, string2 = repeatletters.findSimialarStrings("input.txt")
+    print("Similar Strings:", string1, string2)
+    print("Common Letters:", repeatletters.removeDifferentLettersFromSimilarStrings(string1, string2))
 
+main()

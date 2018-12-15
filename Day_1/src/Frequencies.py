@@ -1,36 +1,32 @@
-import inspect
 import os
-import Day_1
+
+from FileIO import fileIO
+
 
 class Freq:
 
     def __init__(self):
+        self.fileio = fileIO(os.getcwd())
         self.currentFreq = 0
-        self.file = None
         self.frequencylist = [0]
 
     def getFinalFreq(self, filename):
-        self.openFile(filename)
-        for line in self.file:
+        self.fileio.openFile(filename)
+        for line in self.fileio.file:
             self.updateFrequency(int(line))
-        self.file.close()
+        self.fileio.file.close()
 
     def getRepeatingFreq(self, filename):
-        self.openFile(filename)
-        i =0
+        self.fileio.openFile(filename)
+        i = 0
         while True:
-            for line in self.file:
+            for line in self.fileio.file:
                 self.updateFrequency(int(line))
                 if self.checkRepeat(int(self.currentFreq)):
-                    self.file.close()
+                    self.fileio.file.close()
                     return self.currentFreq
-            i+=1
-            self.file.seek(0)
-        self.file.close()
-
-
-    def openFile(self, filename):
-        self.file = open("C:/Users/jerio/Documents/PycharmProjects/AdventofCode/Day_1/"+filename, "r")
+            i += 1
+            self.fileio.file.seek(0)
 
     def checkRepeat(self, val):
         if val not in self.frequencylist:
@@ -47,7 +43,5 @@ def main():
     freq = Freq()
     freq.getFinalFreq("input.txt")
     print("Frequency:", freq.currentFreq)
-    print("Repeating Frequency",freq.getRepeatingFreq("input.txt"))
-
-main()
+    print("Repeating Frequency", freq.getRepeatingFreq("input.txt"))
 

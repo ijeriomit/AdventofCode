@@ -5,9 +5,6 @@ class MyTestCase(unittest.TestCase):
     def setUp(self):
         self.rl = RepeatLetter()
 
-    def test_count3similiar(self):
-        self.assertTrue(self.rl.hasThreeRepeat("aaabbn"))
-
     def test_countOccurencewith3(self):
         self.assertEqual(3, self.rl.countLetterOccurences("a", "aaabb"))
 
@@ -30,17 +27,20 @@ class MyTestCase(unittest.TestCase):
         self.assertEqual((0, 1), self.rl.getOccurences("aaabcde"))
 
     def test_areStringSimialar(self):
-        self.assertEqual(1, self.rl.areStringsSimialar("him", "hem"))
+        self.assertEqual(True, self.rl.areStringsSimialar("him", "hem"))
 
     def test_areStringsNotSimialar(self):
-        self.assertEqual(-1, self.rl.areStringsSimialar("him", "her"))
+        self.assertEqual(False, self.rl.areStringsSimialar("him", "her"))
 
     def test_areStringsNotSimialarManyDifferences(self):
-        self.assertEqual(-1, self.rl.areStringsSimialar("hiiim", "heeer"))
+        self.assertEqual(False, self.rl.areStringsSimialar("hiiim", "heeer"))
+
+    def test_removeDifferences(self):
+        self.assertEqual("ac", self.rl.removeDifferentLettersFromSimilarStrings("abc", "adc"))
 
     def test_findfamiliarStrings(self):
         tuple = self.rl.findSimialarStrings("input.txt")
-        print(self.rl.removeDifferentLetters(tuple[0], tuple[2]))
+        print(self.rl.removeDifferentLettersFromSimilarStrings(tuple[0], tuple[2]))
 
 
 if __name__ == '__main__':
