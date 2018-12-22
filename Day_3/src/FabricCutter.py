@@ -1,5 +1,4 @@
 import os
-import re
 import numpy as np
 from FileIO import fileIO
 
@@ -14,7 +13,7 @@ class FabricClaims:
     def fillclaims(self, filename):
         self.fileio.openFile(filename)
         for line in self.fileio.file:
-            claimdata = parsedata(line)
+            claimdata = self.fileio.parsedata(line, r'\d+')
             self.claims[int(claimdata[0])] = [int(claimdata[1]), int(claimdata[2]), int(claimdata[3]), int(claimdata[4])]
         self.fileio.file.close()
         return self.claims
@@ -54,8 +53,6 @@ class FabricClaims:
             if key not in conflicts:
                 return key
 
-def parsedata(data):
-    return re.findall(r'\d+', data)
 
 def checkvaluesequal(actual, expected):
     return actual == expected

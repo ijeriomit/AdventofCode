@@ -1,4 +1,6 @@
 import os
+import re
+
 
 class fileIO:
 
@@ -11,3 +13,7 @@ class fileIO:
 
     def openFile(self, filename):
         self.file = open(os.path.join(self.directorypath, filename), "r")
+
+    def parsedata(self, data, regex):
+        return re.findall(regex, data)
+

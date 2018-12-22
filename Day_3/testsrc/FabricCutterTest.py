@@ -14,12 +14,12 @@ class MyTestCase(unittest.TestCase):
 
     def test_parseDataLine1(self):
         self.fabclaim.fileio.openFile("input.txt")
-        self.assertEqual(['1', '669', '271', '17', '11'], FabricCutter.parsedata(self.fabclaim.fileio.file.readline()))
+        self.assertEqual(['1', '669', '271', '17', '11'], self.fabclaim.fileio.parsedata(self.fabclaim.fileio.file.readline(), r'\d+'))
 
     def test_parseDataLine2(self):
         self.fabclaim.fileio.openFile("input.txt")
         self.fabclaim.fileio.file.readline()
-        self.assertEqual(['2', '153', '186', '20', '26'], FabricCutter.parsedata(self.fabclaim.fileio.file.readline()))
+        self.assertEqual(['2', '153', '186', '20', '26'], self.fabclaim.fileio.parsedata(self.fabclaim.fileio.file.readline(), r'\d+'))
 
     def test_fillclaims(self):
         self.fabclaim.fillclaims("input.txt")
